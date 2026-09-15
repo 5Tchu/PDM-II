@@ -30,7 +30,7 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
     private int musica, indiceLista;
     private ArrayList<Playlist> lista;
     private CardView card1,card2,card3,card4,card5;
-    private TextView textoMusicaSelecionada, textoMusicaTocando;
+    private TextView textoMusicaSelecionada, textoMusicaTocando, placarTempoAtual, placarTempoRestante;
 
     private ImageView imgPreview, imgNext;
     //___________________________________________________________________________________________________________________________
@@ -82,13 +82,21 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
         imgNext =  findViewById(R.id.imageView6);
         imgNext.setOnClickListener(this);
 
-
-
-
-
+        placarTempoAtual = findViewById(R.id.textView5);
+        placarTempoRestante= findViewById(R.id.textView4);
 
     }
     //___________________________________________________________________________________________________________________________
+
+    public String formatarTempo (int tempo){
+        int segundos = tempo/1000;
+        int minutos = segundos/60;
+        segundos = segundos%60;
+        String tempoFormatado = String.format("%02d:%02d",minutos, segundos);
+        return tempoFormatado;
+
+    }
+
 
     public  boolean onOptionsItemSelected(MenuItem item) {  //ações dos icones e menus da toolbar
         int id = item.getItemId();
@@ -161,8 +169,15 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
     @Override
     public void run() {
         if (mediaPlayer!=null){
+
+            int tempoAtual = mediaPlayer.getCurrentPosition();
+            int duracao = mediaPlayer.getDuration();
+            int tempoRestante = duracao - tempoAtual;
+
             seekbar.setProgress(mediaPlayer.getCurrentPosition());
             handler.postDelayed(this, 1000);
+            placarTempoAtual.setText(formatarTempo(tempoAtual));
+            placarTempoRestante.setText("-"+formatarTempo(tempoRestante));
         }
 
     }
@@ -222,7 +237,11 @@ public class Tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
 public void play(){
     if (mediaPlayer == null) {
         mediaPlayer = MediaPlayer.create(this, lista.get(indiceLista).getMusica());
-        textoMusicaTocando.setText("Musica Tocando:" + lista.get(indiceLista).getNome());
+        //textoMusicaTocando.setText("Musica Tocando:" + lista.get(indiceLista).getNome());
+        toolbar.setTitle(lista.get(indiceLista).getNome());
+        int x = indiceLista;
+        x++;
+        toolbar.setSubtitle(Integer.toString(x)+" de " +Integer.toString(lista.size()));
         mediaPlayer.setOnCompletionListener(this);
         seekbar.setMax(mediaPlayer.getDuration());
         handler.post(this);
