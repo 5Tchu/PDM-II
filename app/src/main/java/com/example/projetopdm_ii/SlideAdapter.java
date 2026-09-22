@@ -1,9 +1,9 @@
 package com.example.projetopdm_ii;
 
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +13,13 @@ import java.util.ArrayList;
 public class SlideAdapter extends RecyclerView.Adapter<SlideHolder> {
     private ArrayList<Slide> lista;
 
+    private TextView texto;
+
     public SlideAdapter(ArrayList<Slide> lista){
+        this.lista = lista;
+    }
+    public SlideAdapter(ArrayList<Slide> lista, TextView texto){
+        this.texto = texto;
         this.lista = lista;
     }
     @NonNull
@@ -27,7 +33,7 @@ public class SlideAdapter extends RecyclerView.Adapter<SlideHolder> {
     public void onBindViewHolder(@NonNull SlideHolder holder, int position) {
         holder.titulo.setText(lista.get(position).getNome());
         holder.imagem.setImageResource(lista.get(position).getImagem());
-
+        texto.setText(lista.get(position).getTexto());
     }
 
     @Override

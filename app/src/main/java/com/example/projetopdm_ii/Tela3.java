@@ -1,6 +1,7 @@
 package com.example.projetopdm_ii;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ public class Tela3 extends AppCompatActivity {
     private ViewPager2 viewPager;
 
     private ArrayList<Slide> lista;
+    private TextView texto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +29,15 @@ public class Tela3 extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        viewPager = findViewById(R.id.viewpager);
+        texto = findViewById(R.id.textView7);
+        viewPager = findViewById(R.id.viewPager);
        lista = new ArrayList<Slide>();
-       lista.add(new Slide("Slide 1", R.drawable.neo,"texto.."));
-       lista.add(new Slide("Slide 2", R.drawable.star,"texto.."));
-       lista.add(new Slide("Slide 3", R.drawable.collect,"texto.."));
-       lista.add(new Slide("Slide 4", R.drawable.coven,"texto.."));
-       lista.add(new Slide("Slide 5", R.drawable.hallo,"texto.."));
-       SlideAdapter adapter = new SlideAdapter(lista);
+       lista.add(new Slide("Slide 1", R.drawable.zeni,"forró muito loko pra festa junina com os crias"));
+       lista.add(new Slide("Slide 2", R.drawable.uzi,"escute se quer farmar aura+ego"));
+       lista.add(new Slide("Slide 3", R.drawable.casa,"pelo jeito ela tá querendo ãanhm, fazendeirooow...elas se amarra no cowboy pq playboy não tem dinheiro, fazendeirooo"));
+       lista.add(new Slide("Slide 4", R.drawable.toki,"lyli was a litlle girl...follow everywhere i go"));
+       lista.add(new Slide("Slide 5", R.drawable.muza,"its time to go to the Erudito...for some funnn! yeap, its mee: LYLIAA litlle which"));
+       SlideAdapter adapter = new SlideAdapter(lista, texto);
        viewPager.setAdapter(adapter);
     }
 }
